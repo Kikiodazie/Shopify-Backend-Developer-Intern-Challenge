@@ -41,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/create-user","/api/v1/auth/signin").permitAll()// Allow permission to only this two endpoints
+                .antMatchers("/api/v1/auth/create-user","/upload","/api/v1/auth/signin").permitAll()// Allow permission to only this two endpoints
                 .antMatchers("/v2/api-docs",
                         "/configuration/ui",
                         "/swagger-resources/**",
