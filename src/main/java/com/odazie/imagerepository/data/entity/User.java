@@ -18,6 +18,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @NotNull
+    @Column(name = "first_name", nullable = false )
+    private String firstName;
+
+
+    @Column(name = "last_name")
+    private String lastName;
+
 
     @NotNull
     @Email
@@ -27,15 +35,6 @@ public class User {
     @NotNull
     @Column(name = "password", nullable = false)
     private String password;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_role_id")
-    )
-    private Set<UserRole> userRoles;
-
 
     @OneToMany(
             mappedBy = "user",

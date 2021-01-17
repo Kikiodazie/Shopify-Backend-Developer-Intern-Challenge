@@ -14,6 +14,12 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imageId;
 
+    @Column(name = "image_title", nullable = false)
+    private String title;
+
+    @Column(name = "image_url", nullable = false, columnDefinition = "TEXT")
+    private String imageUrl;
+
 
 
 
