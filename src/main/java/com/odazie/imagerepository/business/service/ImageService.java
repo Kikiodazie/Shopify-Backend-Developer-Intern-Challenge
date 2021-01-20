@@ -11,6 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -24,7 +27,7 @@ public class ImageService {
         this.cloudinaryConfig = cloudinaryConfig;
     }
 
-    public String uploadFile(MultipartFile image) {
+    public String uploadSingleFile(MultipartFile image) {
         try {
             File uploadedFile = convertMultiPartToFile(image);
             Map uploadResult = cloudinaryConfig.uploader().upload(uploadedFile, ObjectUtils.asMap("public_id", image.getOriginalFilename()));
@@ -39,6 +42,30 @@ public class ImageService {
             throw new RuntimeException(e);
         }
     }
+
+    public String uploadBulkImages(MultipartFile image, User currentUser) {
+
+
+        LocalDate date = LocalDate.now();
+        String currentDate = String.valueOf(date);
+        try {
+            File uploadedFile = convertMultiPartToFile(image);
+
+            // This bulk upload saves the images in a particular folder by date
+            Map uploadResult = cloudinaryConfig.uploader().upload(uploadedFile, ObjectUtils.asMap("folder","user_"+currentUser.getEmail()+"_Bulk_Uploaded_At_"+currentDate, "public_id", image.getOriginalFilename()));
+            boolean isDeleted = uploadedFile.delete();
+
+            if (isDeleted){
+                System.out.println("File successfully deleted");
+            }else
+                System.out.println("File doesn't exist");
+            return  uploadResult.get("url").toString();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());

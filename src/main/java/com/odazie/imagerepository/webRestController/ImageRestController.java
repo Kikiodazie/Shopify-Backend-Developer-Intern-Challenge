@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
+
 @RestController
 public class ImageRestController {
 
@@ -25,12 +27,26 @@ public class ImageRestController {
     }
 
     @PostMapping("/single-upload")
-    public ResponseEntity<ResponseSpec> uploadSingleImage(@RequestParam("image") MultipartFile image, Authentication authentication, @RequestParam("title") String title, @RequestParam("isPublic") Boolean isPublic) {
+    public ResponseEntity<ResponseSpec> uploadSingleImage(@RequestParam("image") MultipartFile image, Authentication authentication, @RequestParam("isPublic") Boolean isPublic) {
 
         User currentUser = userService.findUserByEmail(authentication.getName());
-        String url = imageService.uploadFile(image);
-        imageService.saveGifToDB(url, title , isPublic,currentUser);
+        String url = imageService.uploadSingleFile(image);
 
+        imageService.saveGifToDB(url , image.getOriginalFilename() , isPublic,currentUser);
+
+        ResponseSpec responseSpec = new ResponseSpec("Successfully uploaded");
+
+        return new ResponseEntity<>(responseSpec, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/bulk-upload")
+    public ResponseEntity<ResponseSpec> uploadingBulkImages(@RequestParam("images") MultipartFile[] images, Authentication authentication, @RequestParam("isPublic") Boolean isPublic  ){
+        User currentUser = userService.findUserByEmail(authentication.getName());
+
+        Arrays.stream(images).forEach(image -> {
+            String url = imageService.uploadBulkImages(image, currentUser);
+            imageService.saveGifToDB(url, image.getOriginalFilename(), isPublic, currentUser);
+        });
         ResponseSpec responseSpec = new ResponseSpec("Successfully uploaded");
 
         return new ResponseEntity<>(responseSpec, HttpStatus.CREATED);
