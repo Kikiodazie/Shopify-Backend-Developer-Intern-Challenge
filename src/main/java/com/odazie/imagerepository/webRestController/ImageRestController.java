@@ -3,18 +3,18 @@ package com.odazie.imagerepository.webRestController;
 import com.odazie.imagerepository.business.model.ResponseSpec;
 import com.odazie.imagerepository.business.service.ImageService;
 import com.odazie.imagerepository.business.service.UserService;
+import com.odazie.imagerepository.data.entity.Image;
 import com.odazie.imagerepository.data.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 
 @RestController
+@RequestMapping("/api/v1")
 public class ImageRestController {
 
 
@@ -51,5 +51,23 @@ public class ImageRestController {
 
         return new ResponseEntity<>(responseSpec, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/images/{imageId}")
+    public ResponseEntity<ResponseSpec> deleteSingleImage(@PathVariable Long imageId, Authentication authentication ){
+        User currentUser = userService.findUserByEmail(authentication.getName());
+
+        Image image = imageService.findByIdAndUser(imageId, currentUser);
+
+        if(image == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        imageService.deleteSingleImage(image, currentUser);
+
+        ResponseSpec responseSpec = new ResponseSpec("Successfully Deleted");
+
+        return new ResponseEntity<>(responseSpec, HttpStatus.CREATED);
+    }
+
 
 }

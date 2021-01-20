@@ -44,6 +44,16 @@ public class User {
     @JsonIgnore
     private final List<Image> images = new ArrayList<>();
 
+    public void addImage(Image image){
+        images.add(image);
+        image.setUser(this);
+    }
+
+    public void deleteImage(Image image){
+        images.remove(image);
+        image.setUser(null);
+    }
+
     public Long getUserId() {
         return userId;
     }

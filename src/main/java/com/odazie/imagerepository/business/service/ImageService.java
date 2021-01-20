@@ -11,9 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 
 @Service
@@ -75,6 +73,17 @@ public class ImageService {
         return convFile;
     }
 
+    public void deleteSingleImage(Image image, User currentUser){
+        currentUser.deleteImage(image);
+        getImageRepository().delete(image);
+    }
+
+    public Image findByIdAndUser(Long id, User user){
+        return getImageRepository().findByImageIdAndUser(id, user);
+    }
+
+
+
 
 
 
@@ -89,6 +98,7 @@ public class ImageService {
         image.setPublic(isPublic);
         image.setTitle(title);
         image.setUser(currentUser);
+        currentUser.addImage(image);
 
         getImageRepository().save(image);
 
