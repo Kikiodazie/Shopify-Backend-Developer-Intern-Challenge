@@ -14,7 +14,6 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@PropertySource(value = {"application-cloudinary.properties"})
 public class ImageRepositoryApplication {
 
     @Value("${cloudinary.cloud_name}")
