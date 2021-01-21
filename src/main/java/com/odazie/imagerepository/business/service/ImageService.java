@@ -78,6 +78,11 @@ public class ImageService {
         getImageRepository().delete(image);
     }
 
+    public void deleteAllImagesOfUser(User currentUser){
+
+        getImageRepository().deleteImagesOfUser(currentUser.getUserId());
+    }
+
     public Image findByIdAndUser(Long id, User user){
         return getImageRepository().findByImageIdAndUser(id, user);
     }
