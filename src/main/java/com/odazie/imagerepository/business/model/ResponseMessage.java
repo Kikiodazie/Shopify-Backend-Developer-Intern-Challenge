@@ -1,9 +1,10 @@
 package com.odazie.imagerepository.business.model;
 
-public class ResponseSpec {
+public class ResponseMessage {
+
     private String message;
 
-    public ResponseSpec(String message) {
+    public ResponseMessage(String message) {
         this.message = message;
     }
 
