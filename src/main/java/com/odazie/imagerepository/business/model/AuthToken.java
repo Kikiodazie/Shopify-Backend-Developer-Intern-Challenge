@@ -1,6 +1,9 @@
 package com.odazie.imagerepository.business.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class AuthToken {
+    @ApiModelProperty(notes = "'Bearer Token' please copy with the Bearer spring and input in the AUTHORIZE button field ")
     private String token;
 
     public AuthToken(){

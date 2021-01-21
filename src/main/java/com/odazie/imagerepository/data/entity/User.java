@@ -2,6 +2,7 @@ package com.odazie.imagerepository.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,10 +17,12 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(hidden = true)
     private Long userId;
 
     @NotNull
     @Column(name = "first_name", nullable = false )
+    @ApiModelProperty(required = true)
     private String firstName;
 
 
@@ -30,10 +33,12 @@ public class User {
     @NotNull
     @Email
     @Column(name = "email", nullable = false, unique = true)
+    @ApiModelProperty(required = true)
     private String email;
 
     @NotNull
     @Column(name = "password", nullable = false)
+    @ApiModelProperty(required = true)
     private String password;
 
     @OneToMany(
