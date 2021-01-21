@@ -18,11 +18,11 @@ This is Image Repository was built with Java/Spring-Boot, Cloudinary & Postgres,
 
 The [Docs](https://imagerepository2021.herokuapp.com/swagger-ui.html#) is pretty comprehensive, but a few issues.
 
-> For ``https://imagerepository2021.herokuapp.com/api/v1/bulk-upload`` for multiple(bulk) upload. File arrays are not supported in OpenAPI 2.0. You need OpenAPI 3.0 to upload multiple files, see [Swagger official docs](https://swagger.io/docs/specification/describing-request-body/file-upload/#multiple). This is why upload functionality for multiple files is not available on the docs.....**USE POSTMAN**
+- For ``https://imagerepository2021.herokuapp.com/api/v1/bulk-upload`` for multiple(bulk) upload. File arrays are not supported in OpenAPI 2.0. You need OpenAPI 3.0 to upload multiple files, see [Swagger official docs](https://swagger.io/docs/specification/describing-request-body/file-upload/#multiple). This is why upload functionality for multiple files is not available on the docs.....**USE POSTMAN**
 
-> The `deleteSelectedinBulk` endpoint `/api/v1/images` accepts images id in array request eg  ``https://imagerepository2021.herokuapp.com/api/v1/image?imageIds=1,2,3,4``
+- The `deleteSelectedinBulk` endpoint `/api/v1/images` accepts images id in array request eg  ``https://imagerepository2021.herokuapp.com/api/v1/image?imageIds=1,2,3,4``
 
-> Testing using Postman would be perfect **TOO**!!
+- Testing using Postman would be perfect **TOO**!!
 
 
 
