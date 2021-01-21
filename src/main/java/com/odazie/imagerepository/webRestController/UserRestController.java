@@ -4,10 +4,11 @@ import com.odazie.imagerepository.business.model.AuthToken;
 import com.odazie.imagerepository.business.service.UserService;
 import com.odazie.imagerepository.data.entity.User;
 import com.odazie.imagerepository.securityConfig.TokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/v1")
+@Api(description = "User Sign-up and Login Endpoints")
 public class UserRestController {
 
     private final UserService userService;
@@ -66,9 +68,10 @@ public class UserRestController {
                         currentUser.getPassword()
                 )
         );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
-        return ResponseEntity.ok(new AuthToken(token));
+        return ResponseEntity.ok(new AuthToken("Bearer " + token));
     }
 
 
