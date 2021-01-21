@@ -14,7 +14,6 @@
     <name>image-repository</name>
     <description>An Image: Shopify Backend Developer Intern Challenge</description>
 
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
