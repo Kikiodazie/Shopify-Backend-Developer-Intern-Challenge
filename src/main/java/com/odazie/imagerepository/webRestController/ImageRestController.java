@@ -67,7 +67,7 @@ public class ImageRestController {
 
         ResponseSpec responseSpec = new ResponseSpec("Successfully Deleted");
 
-        return new ResponseEntity<>(responseSpec, HttpStatus.CREATED);
+        return new ResponseEntity<>(responseSpec, HttpStatus.ACCEPTED);
     }
 
 
@@ -85,13 +85,20 @@ public class ImageRestController {
         }
 
         ResponseSpec responseSpec = new ResponseSpec("All selected images of " + currentUser.getEmail() + " deleted");
-        return new ResponseEntity<>(responseSpec, HttpStatus.CREATED);
+        return new ResponseEntity<>(responseSpec, HttpStatus.ACCEPTED);
     }
 
-//    @DeleteMapping("/images/deleteAll")
-//    public ResponseEntity<ResponseSpec> deleteAllUserImages(@PathVariable Long imageId, Authentication authentication){
-//
-//    }
+    @DeleteMapping("/images/delete-all")
+    public ResponseEntity<ResponseSpec> deleteAllUserImages(Authentication authentication){
+        User currentUser = userService.findUserByEmail(authentication.getName());
+
+        imageService.deleteAllImagesOfUser(currentUser);
+
+        ResponseSpec responseSpec = new ResponseSpec("All images of " + currentUser.getEmail() + " has been deleted");
+        return new ResponseEntity<>(responseSpec, HttpStatus.ACCEPTED);
+    }
+
+
 
 
 
